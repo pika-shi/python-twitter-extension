@@ -36,7 +36,6 @@ import urllib2
 import urlparse
 import gzip
 import StringIO
-import time
 
 try:
   # Python >= 2.6
@@ -2206,7 +2205,7 @@ class Api(object):
     self._InitializeDefaultParameters()
 
     if base_url is None:
-      self.base_url = 'https://api.twitter.com/1'
+      self.base_url = 'https://api.twitter.com/1.1'
     else:
       self.base_url = base_url
 
@@ -2553,7 +2552,7 @@ class Api(object):
     '''
     if not user and not self._oauth_consumer:
       raise TwitterError("User must be specified if API is not authenticated.")
-    url = '%s/statuses/friends_timeline' % self.base_url
+    url = '%s/statuses/home_timeline' % self.base_url
     if user:
       url = '%s/%s.json' % (url, user)
     else:
@@ -2930,7 +2929,6 @@ class Api(object):
       for x in data['users']:
         tmp = User.NewFromJsonDict(x)
         user_list.append(tmp)
-      time.sleep(15)
     return user_list
 
   def GetFriendIDs(self, user=None, cursor=-1):
@@ -3000,7 +2998,6 @@ class Api(object):
       for x in data['users']:
         tmp = User.NewFromJsonDict(x)
         user_list.append(tmp)
-      time.sleep(15)
     return user_list
 
   def GetFeatured(self):
@@ -3478,7 +3475,6 @@ class Api(object):
       for x in data['users']:
         tmp = User.NewFromJsonDict(x)
         member_list.append(tmp)
-      time.sleep(15)
     return member_list
 
   def GetListMemberships(self, user, cursor=-1):
@@ -3515,7 +3511,6 @@ class Api(object):
       for x in data['lists']:
         tmp = List.NewFromJsonDict(x)
         list_list.append(tmp)
-      time.sleep(15)
       count += 1
     return list_list
 
